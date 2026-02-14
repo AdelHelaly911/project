@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Note</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: radial-gradient(circle at top, #1b1b1b, #000);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  color: white;
+}
+
+.container {
+  text-align: center;
+  z-index: 2;
+}
+
+.question {
+  font-size: 30px;
+  margin-bottom: 25px;
+}
+
+.name {
+  color: #ff4d6d;
+  font-weight: bold;
+}
+
+.buttons button {
+  font-size: 20px;
+  padding: 12px 30px;
+  margin: 10px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.yes {
+  background: #ff4d6d;
+  color: white;
+}
+
+.no {
+  background: #444;
+  color: white;
+  position: relative;
+}
+
+/* floating hearts */
+.heart {
+  position: absolute;
+  bottom: -20px;
+  font-size: 20px;
+  animation: floatUp 6s linear infinite;
+  opacity: 0.7;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-110vh) scale(1.4);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="question">
+    Do you want to be my Valentine,<br>
+    <span class="name" id="name"></span>? 💖
+  </div>
+
+  <div class="buttons">
+    <button class="yes" onclick="yesClick()">Yes 💘</button>
+    <button class="no" onmouseover="moveNo()">No 🙈</button>
+  </div>
+</div>
+
+<script>
+/* typing effect */
+const text = "Saloma";
+let index = 0;
+const speed = 200;
+const nameEl = document.getElementById("name");
+
+function typeName() {
+  if (index < text.length) {
+    nameEl.innerHTML += text.charAt(index);
+    index++;
+    setTimeout(typeName, speed);
+  }
+}
+typeName();
+
+/* NO button escape */
+function moveNo() {
+  const btn = document.querySelector('.no');
+  const x = Math.random() * (window.innerWidth - 100);
+  const y = Math.random() * (window.innerHeight - 100);
+  btn.style.position = "absolute";
+  btn.style.left = x + "px";
+  btn.style.top = y + "px";
+}
+
+/* YES click */
+function yesClick() {
+  document.body.innerHTML = `
+    <div style="
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:#000;
+      color:white;
+      font-size:32px;
+      text-align:center;
+    ">
+      Yay 💖<br>
+      You just made my heart the happiest ❤️
+    </div>
+  `;
+}
+
+/* create hearts */
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (16 + Math.random() * 20) + "px";
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 6000);
+}, 400);
+</script>
+
+</body>
+</html>
